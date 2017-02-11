@@ -1,0 +1,112 @@
+<html>
+<head>
+	<style>
+
+		#nav {
+			position:relative;
+			float: left;
+			background-color: white;
+			margin-top: 8px;	
+		}
+		
+		#content {
+			position:relative;
+			float: left;
+			background-color: lightblue;
+			margin-top: 8px;	
+			font-family: arial;
+			font-size: 18px;
+			height: 100%;
+		}
+	
+		#slider, #nav, #content {
+			width: 100%;	
+		}
+		
+		#slider {
+			background-color: yellow;	
+		}
+				
+		#nav li {
+			float: left;
+			font-family: arial;
+			font-weight: 800;
+			font-size: 18px;
+			padding: 8px;
+			list-style: none;	
+		}
+		
+		@media screen and (min-width: 1059px) {
+		    body {
+		        background-color: red;
+		    }
+		    
+		    #slider {
+		    		height:300px;	
+		    }
+		    
+		    
+		    
+		}
+
+		@media screen and (min-width: 704px) and (max-width: 1060px) {
+		    body {
+		        background-color: orange;
+		    }
+
+		    #slider {
+		    		height:150px;	
+		    }
+		}
+
+		@media screen and (min-width: 128px) and (max-width: 703px) {
+		    body {
+		        background-color: lightgreen;
+		    }
+
+		    #slider {
+		    		height:100px;	
+		    }
+
+ 			 #nav li {
+					float: none;
+					text-align: center;
+			 }
+
+		}
+		
+	</style>
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	
+
+</head>
+
+<body>
+
+<div id="container">
+
+    <div id="slider_box">
+    	<div id="slider">
+    	slider
+    	</div>
+    </div>
+
+	<div id="nav">
+		<li>home</li>
+		<li>joehoe</li>
+		<li>bla</li>	
+		<li>contact</li>
+	</div>
+
+	<div id="content">
+	content
+	</div>
+	
+
+</div>
+
+</body>
+
+
+</html>

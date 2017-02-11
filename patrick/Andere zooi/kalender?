@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Kalender</title>
+<link href="style.css" type="text/css" rel="stylesheet">
+</head>
+ 
+<body>
+<?php
+function drukmaandaf($fm, $fy) {
+  // zelfgedefinieerde dag- en maandnamen
+  $dagnaam   = array(0 => "ma", "di", "wo", "do", "vr", "za", "zo");
+  $maandnaam = array(1 => "Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December");
+ 
+  $nu = time();
+  $by = (date("Y", $nu) == $fy);
+  $bm = (date("n", $nu) == $fm);
+ 
+  // zoek de eerste maandag van de week waarin de maand $fm begint
+  $eerstedag = mktime(0, 0, 0, $fm, 1, $fy);
+  if(date("w", $eerstedag) <> 1) {
+    // eerste dag van de maand is geen maandag
+    $eerstemaandag = mktime(0,0,0,$fm,1-(!date("w", $eerstedag) ? 6 : date("w", $eerstedag) - 1),$fy);
+  } else {
+    // eerste dag van de maand valt op een maandag
+    $eerstemaandag = $eerstedag;
+  }
+ 
+  // zoek de laatste zondag van de week waarin de maand $fm eindigt
+  $laatstedag = mktime(0, 0, 0, $fm, date("t", mktime(0, 0, 0, $fm, 1, $fy)),$fy);
+  if(date("w", $laatstedag)) {
+    // laatste dag van de maand is geen zondag
+    $laatstezondag = mktime(0, 0, 0, $fm+1, 7 - date("w",$laatstedag), $fy);
+  } else {
+    // laatste dag van de maand valt op een zondag
+   $laatstezondag = $laatstedag;
+  }
+ 
+  // we gaan kijken in hoeveel kalenderweken een maand zit. Hierbij moeten we op twee speciale gevallen
+  // letten: de eerste maandag van januari en de laatste zondag van december, deze kunnen namelijk in
+  // een ander jaar zitten en hierdoor de berekening van het het aantal weken verknoeien.
+  $edz = 0; // extra dagen die aan de zondag toegevoegd moeten worden
+  if($fm == 1 && date("Y", $eerstemaandag) <> $fy) {
+    // de maand waar we naar kijken is januari, en de eerste dag van de week waarin januari begint
+    // valt niet op een maandag (en niet in het huidige jaar)
+    // - we dienen dus dagen toe te voegen aan de laatste zondag...
+    $edz = date("z", mktime(0,0,0,12,31,$fy-1))+1;
+  }
+  if($fm == 12 && date("Y", $laatstezondag) <> $fy) {
+    // de maand waar we naar kijken is december, en de laatste dag van de week waarin december eindigt
+    // valt niet op een zondag (en niet in het huidige jaar)
+    // - we dienen dus dagen toe te voegen aan de laatste zondag...
+    $edz = date("z", mktime(0,0,0,12,31,$fy))+1;
+  }
+  // we kunnen nu het aantal weken berekenen - het verschil tussen de
+  // eerste maandag en de laatste zondag +1 is altijd deelbaar door 7.
+  $aantalweken = (date("z", $laatstezondag) + $edz - date("z", $eerstemaandag) + 1)/7;
+ 
+  // we kunnen nu mbv $eerstemaandag en $aantalweken de kalender van een maand af gaan drukken
+  echo "<table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">\n";
+  echo "<tr><td class=\"".($by && $bm ? "tm" : "hd")."\" colspan=\"".($aantalweken+1)."\" align=\"center\">";
+  echo $maandnaam[$fm]." ".$fy;
+  echo "</td></tr>\n";
+  // weeknummers afdrukken
+  echo "<tr><td>&nbsp;</td>";
+  for($i=0; $i < $aantalweken;  $i++) {
+    $week = date("W", $eerstemaandag + $i * 604800 + 3600); // seconden in een week + een uur
+    echo "<td class=\"bd\">".(($week < 10) ? "0".$week : $week)."</td>";
+  }
+  echo "</tr>";
+ 
+  // dagnamen en dagnummers afdrukken
+  for($d = 0; $d < 7; $d++) {
+    echo "<tr>\n";
+    echo "<td class=\"bd\">".$dagnaam[$d]."</td>\n";
+    for($w = 0; $w < $aantalweken; $w++) {
+      // in verband met zomer en wintertijd moet bij de dag een uur opgeteld worden
+      // anders krijg je 2x dezelfde dag achter elkaar
+      $dag = $eerstemaandag+($w*7+$d)*86400 + 3600;
+      $dagnummer = date("j", $dag);
+      $bd = (date("j", $nu) == $dagnummer);
+      echo "<td".(date("n", $dag) <> $fm ? " class=\"am\"": ($by && $bm && $bd ? " class=\"td\"" : "")).">";
+      echo ($dagnummer < 10 ? "0" : "").$dagnummer;
+      echo "</td>";
+    }
+    echo "</tr>\n";
+  }
+  echo "</table>\n";
+} // einde functie drukmaandaf
+ 
+// extra - kijkt in de url of er al eens een kalendermaand is opgevraagd
+if(!isset($_GET['m']) || !isset($_GET['y'])) {
+  $m = date("n");
+  $y = date("Y");
+} else {
+  $m = $_GET['m'];
+  $y = $_GET['y'];
+}
+ 
+// drukt de kalender af
+drukmaandaf($m, $y);
+ 
+// linkjes naar vorige en volgende maand
+echo "<a href=\"".$_SERVER['PHP_SELF']."?m=".($m > 1 ? $m-1 : 12)."&y=".($m > 1 ? $y : $y-1)."\">previous</a> | ";
+echo "<a href=\"".$_SERVER['PHP_SELF']."?m=".($m < 12 ? $m+1: 1)."&y=".($m < 12 ? $y : $y+1)."\">next</a>";
+?>
+</body>
+</html>

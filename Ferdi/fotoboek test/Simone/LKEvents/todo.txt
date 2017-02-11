@@ -1,0 +1,15 @@
+- navigatiemenu menulogotje toevoegen(evt animatie) -> zet je navigatie in icon map en probeer hem dan te fixen
+<!--wanneer je op de menubalk (.handle drukt (zie hierboven) dan moet je onderstaande load function uitvoeren)-->
+
+
+- footer text goed onder elkaar zetten(span voor style?)
+- slider arrows height in px doen ipv % zodat ze automatisch in het midden blijven staan ipv media queries? of line-height instellen, px werkt wss niet op klein scherm (comment alle media queries)
+- login?? jquery popup + button?
+- alles stylen en klaar
+
+
+
+
+fijnere lettertype setting:
+line-height: 1.5em;
+font-size: 0.9em;

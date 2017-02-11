@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="foto.css" rel="stylesheet">
+        <link rel="stylesheet" href="/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+        <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+        <link rel="stylesheet" href="css/bootstrap-image-gallery.min.css">
+        
+
+        </head>
+    <body>
+<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+    <h3 class="title"></h3>
+    <a class="prev"></a>
+    <a class="next"></a>
+    <a class="close">X</a>
+    
+    
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body next"></div>
+                <div class="modal-footer">
+                    <button type="button">
+                        <i class="glyphicon glyphicon-chevron-left"> </i>
+                        Previous
+                    </button>
+                    <button type="button" class="btn btn-primary next">
+                        Next
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="links">
+    <a href="images/fox-wallpaper-16.jpg" data-gallery>
+        <img src="images/fox-wallpaperklein.jpg" alt="Banana">
+    </a>
+    <a href="images/Wonderful Nebula Galaxy Computer Wallpaper.jpg" data-gallery>
+        <img src="images/Wonderful Nebula Galaxy Computer Wallpaperklein.jpg" alt="Apple">
+    </a>
+    <a href="images/wolf.jpg" data-gallery>
+        <img src="images/wolfklein.jpg" alt="Wolf">
+    </a>
+    <a href="images/wolf.jpg" data-gallery>
+        <img src="images/wolfklein.jpg" alt="Wolf">
+    </a>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<script src="js/bootstrap-image-gallery.min.js"></script>
+
+    </body>
+</html>
